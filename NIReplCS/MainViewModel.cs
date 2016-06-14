@@ -25,8 +25,6 @@ namespace NIReplCS
 
         public ObservableCollection<OutputLine> ConsoleHistory { get; set; }
 
-        public int CaretPosition { get; set; }
-
         OutputModule terminal;
 
         private ICommand enterKeyCommand;
@@ -36,12 +34,10 @@ namespace NIReplCS
                 return enterKeyCommand
                     ?? (enterKeyCommand = new EnterActionCommand(() =>
                     {
-                        //MessageBox.Show(DispText);
-
-                        //DispText = NewDispText(DispText);
-
+                        //Appends current command(s) to console history
                         ConsoleHistory.Add(new OutputLine(DispText));
 
+                        //Runs command(s)
                         terminal.RunCommand(DispText);
 
                         string output = terminal.GetLastOutput();
@@ -50,20 +46,10 @@ namespace NIReplCS
                         {
                             ConsoleHistory.Add(new OutputLine(output));
                         }
-
-                        
+                                                
                         DispText = "";
-
-
-
-
                     }));
             }
-        }
-
-        private string NewDispText(string dispText)
-        {
-            return string.Concat(dispText, "\n> ");
         }
 
         public MainViewModel()
@@ -72,7 +58,6 @@ namespace NIReplCS
             ConsoleHistory = new ObservableCollection<OutputLine>();
 
             terminal = new OutputModule();
-
         }
     }
 }

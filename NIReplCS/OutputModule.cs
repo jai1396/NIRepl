@@ -12,8 +12,6 @@ namespace NIReplCS
 {
     public class OutputModule
     {
-        //public Dictionary<string, ValueType> NameValueDict  { get; set; }
-        //public Dictionary<string, SyntaxToken> NameTokenDict { get; set; }
         private Microsoft.CodeAnalysis.Scripting.ScriptState state { get; set; }
         private bool RunningCommandNow { get; set; }
         private string LastCommandOutput { get; set; }
@@ -35,29 +33,17 @@ namespace NIReplCS
 
         public OutputModule()
         {
-            //NameValueDict = new Dictionary<string, ValueType>();
-            //NameTokenDict = new Dictionary<string, SyntaxToken>();
             StartExecution();
             RunningCommandNow = false;
         }
 
         private async void StartExecution()
         {
+            //Initializes Execution state
             state = await CSharpScript.RunAsync("",
                 ScriptOptions.Default.WithImports("System.IO"));
         }
 
-//        private string GenSourceCode(string input)
-//        {
-//            return @"using System;
-//class Program
-//        {
-//            static void Main()
-//            {
-//                " + input + @"
-//            }
-//        }";
-//        }
 
         internal string GetLastOutput()
         {
@@ -67,20 +53,15 @@ namespace NIReplCS
         }
 
         public async void RunCommand(string dispText)
-        {
-            //var source = GenSourceCode(dispText);
-            //var tree = SyntaxFactory.ParseSyntaxTree(source);
-            //var compilation = CSharpCompilation.Create("MyCommand", syntaxTrees: new[] { tree }, references: new[] { Mscorlib });
-            //var model = compilation.GetSemanticModel(tree);
-
+        {            
             RunningCommandNow = true;
 
             if(RunningCommandNow)
             {
+                //Gets state after execution of new code
                 state = await state.ContinueWithAsync(dispText);
                 StoreOutput(state.ReturnValue);
             }
-
             
         }
 
@@ -97,45 +78,8 @@ namespace NIReplCS
             
             RunningCommandNow = false;
         }
-
-        //private object GetAllScopes(SyntaxTree tree)
-        //{
-
-        //}
+        
     }
 }
 
-/*
- *  MemoryStream ms = new MemoryStream();
-> string path = @"C:\Users\Janthony\Desktop\asd.txt";
-> using (FileStream fs = new File.OpenRead(path))
-. {
-.     fs.CopyTo(ms);
-. }
-(1,33): error CS0426: The type name 'OpenRead' does not exist in the type 'File'
-> using (FileStream fs = File.OpenRead(path))
-. {
-.     fs.CopyTo(ms);
-. }
-> ms.ToString()
-"System.IO.MemoryStream"
-> var sr = new StreamReader(ms);
-> var mstr = sr.ReadToEnd();
-> mstr
-""
-> Console.WriteLine(mstr);
 
-> FileStream fs = new File.OpenRead(path);
-(1,26): error CS0426: The type name 'OpenRead' does not exist in the type 'File'
-> FileStream fs = File.OpenRead(path);
-> var sr = new StreamReader(fs);
-> var mstr = sr.ReadToEnd();
-> mstr
-"asdasdaddsadasdasd"
-
-string path = @"C:\Users\Janthony\Desktop\asd.txt";
-FileStream fs = File.OpenRead(path);
-var sr = new StreamReader(fs);
-var mstr = sr.ReadToEnd();
-mstr
-*/

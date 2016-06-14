@@ -30,7 +30,7 @@
             </ListBox>
 
             <TextBox x:Name="ConsoleTextBox" HorizontalAlignment="Left" Height="60" Margin="60,10,0,0" TextWrapping="Wrap" Text="{Binding DispText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="402" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto"  
-                     AcceptsReturn="True"
+                     AcceptsReturn="True" FocusManager.FocusedElement="{Binding RelativeSource={RelativeSource Self}}"
                      >
                 <TextBox.InputBindings>
                     <KeyBinding Command="{Binding EnterKeyCommand}" CommandParameter="{Binding }" Key="F2"/>

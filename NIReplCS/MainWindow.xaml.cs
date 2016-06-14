@@ -23,12 +23,8 @@ namespace NIReplCS
         public MainWindow()
         {
             InitializeComponent();
-
             var m_vm = (MainViewModel)DataContext;
-
-            ConsoleTextBox.CaretIndex = ConsoleTextBox.Text.Length;
-
-
+            ConsoleTextBox.Focus();
         }
     }
 }
