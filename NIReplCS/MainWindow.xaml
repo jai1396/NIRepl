@@ -1,0 +1,43 @@
+﻿<Window x:Class="NIReplCS.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NIReplCS"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525"
+        >
+
+
+    <Window.DataContext>
+        <local:MainViewModel/>
+    </Window.DataContext>
+
+    <Grid>
+        <StackPanel>
+
+            <ListBox x:Name="ConsoleHistory" 
+        		Height="146" Margin="60,41,55,0" VerticalAlignment="Top" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                       ItemsSource="{Binding Path=ConsoleHistory}"
+                       >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid >
+                            <TextBlock Text="{Binding ExecResult}"></TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <TextBox x:Name="ConsoleTextBox" HorizontalAlignment="Left" Height="60" Margin="60,10,0,0" TextWrapping="Wrap" Text="{Binding DispText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="402" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto"  
+                     AcceptsReturn="True"
+                     >
+                <TextBox.InputBindings>
+                    <KeyBinding Command="{Binding EnterKeyCommand}" CommandParameter="{Binding }" Key="F2"/>
+                    <!--<KeyBinding Command="{Binding EnterKeyCommand}" CommandParameter="{Binding }" Key="Enter" />-->
+                </TextBox.InputBindings>
+            </TextBox>
+
+        </StackPanel>
+    </Grid>
+</Window>
